@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Uso - MarkItDown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col md:flex-row">
+
+    <nav class="w-full md:w-64 bg-white border-r border-slate-200 p-4 flex flex-col gap-2 shrink-0 md:min-h-screen">
+        <div class="flex items-center gap-2 mb-6 px-2 text-blue-600">
+            <i data-lucide="file-text" class="w-6 h-6"></i>
+            <h1 class="text-xl font-bold">MarkItDown</h1>
+        </div>
+        
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Navegación</div>
+        
+        <button id="nav-install" onclick="switchTab('install')" class="nav-item bg-blue-600 text-white flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left transition-colors">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Instalación
+        </button>
+
+        <button id="nav-cli" onclick="switchTab('cli')" class="nav-item text-slate-600 hover:bg-slate-100 flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left transition-colors">
+            <i data-lucide="terminal" class="w-4 h-4"></i>
+            Línea de Comandos
+        </button>
+        
+        <button id="nav-api" onclick="switchTab('api')" class="nav-item text-slate-600 hover:bg-slate-100 flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left transition-colors">
+            <i data-lucide="code" class="w-4 h-4"></i>
+            API de Python
+        </button>
+
+        <button id="nav-advanced" onclick="switchTab('advanced')" class="nav-item text-slate-600 hover:bg-slate-100 flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left transition-colors">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            Uso Avanzado
+        </button>
+
+        <button id="nav-generator" onclick="switchTab('generator')" class="nav-item text-slate-600 hover:bg-slate-100 flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left transition-colors">
+            <i data-lucide="blocks" class="w-4 h-4"></i>
+            Generador de Código
+        </button>
+    </nav>
+
+    <main class="flex-1 p-6 md:p-12 max-w-4xl">
+        
+        <div id="install" class="tab-content">
+            <h2 class="text-3xl font-bold mb-2">Instalación y Requisitos</h2>
+            <p class="text-slate-600 mb-8">Prepara tu entorno para utilizar MarkItDown. Requiere Python 3.10+.</p>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
+                <h3 class="text-lg font-semibold mb-4">Instalación Completa</h3>
+                <p class="text-sm text-slate-600 mb-3">Instala la herramienta con todas sus dependencias opcionales (recomendado).</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-inst-1">pip install 'markitdown[all]'</code></pre>
+                    <button onclick="copyToClipboard('code-inst-1')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Instalación Modular</h3>
+                <p class="text-sm text-slate-600 mb-3">Si prefieres un entorno más ligero, instala solo lo que necesitas (ej. PDF, Word, PowerPoint).</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-inst-2">pip install 'markitdown[pdf,docx,pptx]'</code></pre>
+                    <button onclick="copyToClipboard('code-inst-2')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="cli" class="tab-content hidden">
+            <h2 class="text-3xl font-bold mb-2">Línea de Comandos (CLI)</h2>
+            <p class="text-slate-600 mb-8">La forma más rápida de convertir documentos directamente desde tu terminal.</p>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
+                <h3 class="text-lg font-semibold mb-4">Conversión Básica</h3>
+                <p class="text-sm text-slate-600 mb-3">Convierte un archivo y especifica el nombre del archivo de salida usando la bandera <code class="bg-slate-100 px-1 rounded text-pink-600">-o</code>.</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-cli-1">markitdown documento.pdf -o resultado.md</code></pre>
+                    <button onclick="copyToClipboard('code-cli-1')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Uso con Tuberías (Pipes)</h3>
+                <p class="text-sm text-slate-600 mb-3">Puedes pasar el contenido de un archivo a través de la entrada estándar (stdin).</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-cli-2">cat documento.pdf | markitdown > resultado.md</code></pre>
+                    <button onclick="copyToClipboard('code-cli-2')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced" class="tab-content hidden">
+            <h2 class="text-3xl font-bold mb-2">Uso Avanzado y Docker</h2>
+            <p class="text-slate-600 mb-8">Características adicionales como integraciones en la nube o ejecución aislada.</p>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
+                <h3 class="text-lg font-semibold mb-4">Azure Document Intelligence</h3>
+                <p class="text-sm text-slate-600 mb-3">Utiliza la API de Azure para extraer texto con mayor precisión y manejo de estructura.</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-blue-300 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-adv-1">from markitdown import MarkItDown
+
+md = MarkItDown(docintel_endpoint="<TU_ENDPOINT_AZURE>")
+result = md.convert("documento_complejo.pdf")
+print(result.text_content)</code></pre>
+                    <button onclick="copyToClipboard('code-adv-1')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Uso mediante Docker</h3>
+                <p class="text-sm text-slate-600 mb-3">Ejecuta MarkItDown en un contenedor aislado, evitando conflictos de dependencias.</p>
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono"><code id="code-adv-2">docker run --rm -i markitdown:latest < documento.pdf > resultado.md</code></pre>
+                    <button onclick="copyToClipboard('code-adv-2')" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="generator" class="tab-content hidden">
+            <h2 class="text-3xl font-bold mb-2">Generador de Código</h2>
+            <p class="text-slate-600 mb-8">Configura las opciones y obtén el código de Python listo para usar.</p>
+
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row">
+                <div class="p-6 md:w-1/3 bg-slate-50 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-slate-700">Formato de Archivo</label>
+                        <select id="file-format" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="pdf">Documento PDF (.pdf)</option>
+                            <option value="xlsx">Hoja de Cálculo (.xlsx)</option>
+                            <option value="docx">Documento Word (.docx)</option>
+                            <option value="pptx">Presentación (.pptx)</option>
+                            <option value="jpg">Imagen (.jpg)</option>
+                            <option value="zip">Archivo comprimido (.zip)</option>
+                            <option value="mp3">Audio (.mp3)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="toggle-llm" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm font-semibold text-slate-700">Usar LLM (OpenAI)</span>
+                        </label>
+                        <p class="text-xs text-slate-500 mt-1 ml-8">Permite analizar y describir imágenes incrustadas.</p>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="toggle-plugins" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm font-semibold text-slate-700">Habilitar Plugins</span>
+                        </label>
+                        <p class="text-xs text-slate-500 mt-1 ml-8">Permite la ejecución de extensiones de terceros (como OCR).</p>
+                    </div>
+                </div>
+
+                <div class="p-6 md:w-2/3 bg-slate-900 relative">
+                    <button onclick="copyToClipboard('code-generator-output')" class="absolute top-4 right-4 bg-slate-700 hover:bg-slate-600 text-white p-1.5 rounded transition-colors">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                    <pre class="text-blue-300 text-sm font-mono whitespace-pre-wrap"><code id="code-generator-output"></code></pre>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 transform translate-y-10 opacity-0 transition-all z-50">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        <span class="text-sm font-medium">Copiado al portapapeles</span>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('bg-blue-600', 'text-white');
+                el.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+            
+            const activeNav = document.getElementById('nav-' + tabId);
+            activeNav.classList.remove('text-slate-600', 'hover:bg-slate-100');
+            activeNav.classList.add('bg-blue-600', 'text-white');
+        }
+
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            showToast();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-10', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+            }, 2500);
+        }
+
+        function updateGeneratedCode() {
+            const useLLM = document.getElementById('toggle-llm').checked;
+            const usePlugins = document.getElementById('toggle-plugins').checked;
+            const format = document.getElementById('file-format').value;
+            
+            let codeStr = "from markitdown import MarkItDown\n";
+            
+            if (useLLM) {
+                codeStr += "from openai import OpenAI\n\n";
+                codeStr += "client = OpenAI()\n";
+                codeStr += "md = MarkItDown(\n";
+                codeStr += "    llm_client=client,\n";
+                codeStr += "    llm_model=\"gpt-4o\",\n";
+                codeStr += `    enable_plugins=${usePlugins ? 'True' : 'False'}\n`;
+                codeStr += ")\n";
+            } else {
+                codeStr += `\nmd = MarkItDown(enable_plugins=${usePlugins ? 'True' : 'False'})\n`;
+            }
+            
+            codeStr += `result = md.convert("documento.${format}")\n`;
+            codeStr += "print(result.text_content)";
+            
+            document.getElementById('code-generator-output').innerText = codeStr;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            document.getElementById('toggle-llm').addEventListener('change', updateGeneratedCode);
+            document.getElementById('toggle-plugins').addEventListener('change', updateGeneratedCode);
+            document.getElementById('file-format').addEventListener('change', updateGeneratedCode);
+            
+            updateGeneratedCode();
+        });
+    </script>
+</body>
+</html>
